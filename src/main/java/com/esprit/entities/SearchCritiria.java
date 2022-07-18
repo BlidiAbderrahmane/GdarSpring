@@ -1,5 +1,6 @@
 package com.esprit.entities;
 
+
 public class SearchCritiria {
 	private String projet ;
 	private String controller ;

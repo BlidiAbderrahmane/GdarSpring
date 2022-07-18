@@ -1,41 +1,55 @@
 {
   "projets": [
     {
-      "nomProjet": "aa",
-      "version": "",
+   	  "idProject": "AAAAAAABWQE=",
+      "nomProjet": "oe-ws-example",
+      "version": "Version2",
       "classes": [
         {
-          "nomClass": "",
-          "exportType": "",
+		  "idClass": "AAAAAAABYRo=",        	
+          "nomClass": "HelloWorld",
+          "exportType": "Rest",
           "methods": [
             {
-              "nomMethod": "",
-              "description": "",
-              "exportType": "",
+              "idMethod": "AAAAAAABhAQ=",	
+              "nomMethod": "sampleGet",
+              "description": " \/* Purpose: Notes: *\/",
+              "exportType": "Rest",
               "functionalErrors": [
                 {
-                  "value": "",
-                  "code": ""
+                  "idError": "AAAAAAABwQ8=",
+                  "value": " aucun ListMsg n'est trouvé ",
+                  "code": "Err-WCS-Servives-209"
                 }
               ],
               "oeParams": [
                 {
-                  "nom": "",
-                  "typeIO": "",
-                  "typeOE": ""
+                  "idParamOE": "AAAAAAABvRI=",
+                  "nom": "oObject",
+                  "typeIO": "output",
+                  "typeOE": "longchar"
                 }
               ],
               "resources": [
                 {
-                  "urlApi": "",
-                  "urlRessource": "",
-                  "verbHttp": "",
+                  "idRessource": "AAAAAAAAERI=",
+                  "urlApi": "\/oe-ws-exampleService",
+                  "urlRessource": "\/hello",
+                  "verbHttp": "GET",
                   "httpParams": [
                     {
-                      "nomOE": "",
-                      "nomHttp": "",
-                      "typeIO": "",
-                      "mappingHttp": ""
+                      "idParamHttp": "AAAAAAAAZhA=",
+                      "nomOE": "body",
+                      "nomHttp": "oObject",
+                      "typeIO": "response",
+                      "mappingHttp": "body"
+                    },
+                    {
+                      "idParamHttp": "AAAAAAAAZhE=",
+                      "nomOE": "statuscode",
+                      "nomHttp": "retVal",
+                      "typeIO": "response",
+                      "mappingHttp": "statuscode"
                     }
                   ]
                 }
@@ -45,5 +59,3 @@
         }
       ]
     }
-  ]
-}

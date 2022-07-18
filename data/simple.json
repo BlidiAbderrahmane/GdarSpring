@@ -1,0 +1,49 @@
+{
+  "projets": [
+    {
+      "nomProjet": "aa",
+      "version": "",
+      "classes": [
+        {
+          "nomClass": "",
+          "exportType": "",
+          "methods": [
+            {
+              "nomMethod": "",
+              "description": "",
+              "exportType": "",
+              "functionalErrors": [
+                {
+                  "value": "",
+                  "code": ""
+                }
+              ],
+              "oeParams": [
+                {
+                  "nom": "",
+                  "typeIO": "",
+                  "typeOE": ""
+                }
+              ],
+              "resources": [
+                {
+                  "urlApi": "",
+                  "urlRessource": "",
+                  "verbHttp": "",
+                  "httpParams": [
+                    {
+                      "nomOE": "",
+                      "nomHttp": "",
+                      "typeIO": "",
+                      "mappingHttp": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

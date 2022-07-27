@@ -1,0 +1,61 @@
+{
+  "projets": [
+    {
+   	  "idProject": "AAAAAAABWQE=",
+      "nomProjet": "oe-ws-example",
+      "version": "Version2",
+      "classes": [
+        {
+		  "idClass": "AAAAAAABYRo=",        	
+          "nomClass": "HelloWorld",
+          "exportType": "Rest",
+          "methods": [
+            {
+              "idMethod": "AAAAAAABhAQ=",	
+              "nomMethod": "sampleGet",
+              "description": " \/* Purpose: Notes: *\/",
+              "exportType": "Rest",
+              "functionalErrors": [
+                {
+                  "idError": "AAAAAAABwQ8=",
+                  "value": " aucun ListMsg n'est trouvé ",
+                  "code": "Err-WCS-Servives-209"
+                }
+              ],
+              "oeParams": [
+                {
+                  "idParamOE": "AAAAAAABvRI=",
+                  "nom": "oObject",
+                  "typeIO": "output",
+                  "typeOE": "longchar"
+                }
+              ],
+              "resources": [
+                {
+                  "idRessource": "AAAAAAAAERI=",
+                  "urlApi": "\/oe-ws-exampleService",
+                  "urlRessource": "\/hello",
+                  "verbHttp": "GET",
+                  "httpParams": [
+                    {
+                      "idParamHttp": "AAAAAAAAZhA=",
+                      "nomOE": "body",
+                      "nomHttp": "oObject",
+                      "typeIO": "response",
+                      "mappingHttp": "body"
+                    },
+                    {
+                      "idParamHttp": "AAAAAAAAZhE=",
+                      "nomOE": "statuscode",
+                      "nomHttp": "retVal",
+                      "typeIO": "response",
+                      "mappingHttp": "statuscode"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }

@@ -27,35 +27,25 @@ public class ProjectsServiceImpl implements IPorjectsService{
 		List<Projet> documentation= new ArrayList<Projet>() ;
 
 		ObjectMapper mapper= new ObjectMapper();
-		try {
-
-			Projets lp = mapper.readValue(new File ("data/documentation.json"), Projets.class);
-			documentation= lp.getProjets();
-
-			for (int i = 0; i < documentation.size(); i++) {
-				System.out.println("nom : "+ documentation.get(i).getNomProjet());
-				List<Classe> l = documentation.get(i).getClasses();
-				for (int j = 0; j < l.size(); j++) {
-					// System.out.println("    url "+l.get(j).getUrlApi());
-					// List<Ressource> rs = l.get(j).getListeRessources();
-					//for (int a = 0; a < rs.size(); a++) {
-					//    System.out.println("        methode : " +rs.get(a).getNomMethode());
-					//  }
-
-				}
+		
+			Projets lp;
+			try {
+				lp = mapper.readValue(new File ("data/documentation.json"), Projets.class);
+				documentation= lp.getProjets();
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		
 		return documentation;
 
 	}
@@ -75,6 +65,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 				for(int i=0 ; i< l1.size(); i++) {
 					if(f.getProjet().equals( l1.get(i).getNomProjet() )) {
 						APIRestproject rproject= new APIRestproject();
+						rproject.setIdAPIRestproject(l1.get(i).getIdProject());
 						rproject.setProjet(l1.get(i).getNomProjet());
 						rproject.setVersion(l1.get(i).getVersion());
 						pl.add(rproject);
@@ -87,6 +78,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 				System.out.println("ALL");			
 				for(int i=0 ; i< l1.size(); i++) {
 					APIRestproject rproject= new APIRestproject();
+					rproject.setIdAPIRestproject(l1.get(i).getIdProject());
 					rproject.setProjet(l1.get(i).getNomProjet());
 					rproject.setVersion(l1.get(i).getVersion());
 					pl.add(rproject);
@@ -107,6 +99,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 					if(l1.get(j).getNomProjet().equals( rl.getAPIRestprojects().get(i).getProjet())) {
 						for (int k=0;k<l1.get(j).getClasses().size();k++) {
 							APIRestclass rc = new APIRestclass();
+							rc.setIdAPIRestclass(l1.get(j).getClasses().get(k).getIdClass());
 							rc.setController(l1.get(j).getClasses().get(k).getNomClass());
 							rcs.add(rc);
 						}
@@ -116,20 +109,14 @@ public class ProjectsServiceImpl implements IPorjectsService{
 			}
 		}
 		else {
-			 APIRest rl2=new APIRest();
-			 rl2.setAPIRestprojects(rl.getAPIRestprojects());
-			 //rl2=rl;
-			 int varsupp=0;
-			for(int i=0;i<rl2.getAPIRestprojects().size();i++) {
-				System.out.println("mlolwl " + rl2.getAPIRestprojects().get(i).getProjet());
+			ArrayList<String> projToDel = new ArrayList<String>();
+			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
 				List<APIRestclass> rcs = new ArrayList<APIRestclass>() ;
 				boolean Rlfounded =false;
 				for(int j=0;j<l1.size();j++) {
 					
-					
-					if(l1.get(j).getNomProjet().equals( rl2.getAPIRestprojects().get(i).getProjet())) {
-						System.out.println(i);
-						System.out.println("mou9 " + l1.get(j).getNomProjet() + rl2.getAPIRestprojects().get(i).getProjet());
+					if(l1.get(j).getNomProjet().equals( rl.getAPIRestprojects().get(i).getProjet())) {
+						
 						boolean found =false;
 						int k=0;
 						while(k<l1.get(j).getClasses().size()) {
@@ -137,6 +124,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 								Rlfounded = true;
 								found=true;
 								APIRestclass rc = new APIRestclass();
+								rc.setIdAPIRestclass(l1.get(j).getClasses().get(k).getIdClass());
 								rc.setController(l1.get(j).getClasses().get(k).getNomClass());
 								rcs.add(rc);
 							}
@@ -144,27 +132,31 @@ public class ProjectsServiceImpl implements IPorjectsService{
 						}
 
 						if(!found) {
-						
-							System.out.println(i +" var " + varsupp);
-							System.out.println("rl size " + rl.getAPIRestprojects().size());
-							System.out.println("rl2 size " + rl2.getAPIRestprojects().size());
-							rl.getAPIRestprojects().remove(i-varsupp);
-							
-							System.out.println("ppppp "+i +" var " + varsupp);
-							
-							varsupp++;
-							
+							projToDel.add(rl.getAPIRestprojects().get(i).getIdAPIRestproject());	
 						}
 
 					}
 				}
 
 				if(Rlfounded) {
-					//System.out.println(i +" var " + varsupp);
-			//rl.getAPIRestprojects().get(i-varsupp).setAPIRestclasses(rcs);
+				rl.getAPIRestprojects().get(i).setAPIRestclasses(rcs);
 				}
 
 			}
+			
+				for(int i=0;i<projToDel.size();i++) {
+					int j=0;
+					boolean found=false;
+					while(j<rl.getAPIRestprojects().size() && !found) {
+						if(projToDel.get(i).equals(rl.getAPIRestprojects().get(j).getIdAPIRestproject())) {
+							rl.getAPIRestprojects().remove(rl.getAPIRestprojects().get(j));
+							found=true;
+						}
+						j++;
+					}
+				}
+			
+			
 		}
 
 		return rl;

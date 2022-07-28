@@ -3,11 +3,19 @@ package com.esprit.entities;
 import java.util.List;
 
 public class APIRestmethod {
+
+	private String idAPIRestmethod;
 	private String nomMethode;
 	private String description;
 	private List<APIRestressource> APIRestresources;
-	
-	
+
+
+	public String getIdAPIRestmethod() {
+		return idAPIRestmethod;
+	}
+	public void setIdAPIRestmethod(String idAPIRestmethod) {
+		this.idAPIRestmethod = idAPIRestmethod;
+	}
 	public String getNomMethode() {
 		return nomMethode;
 	}
@@ -26,8 +34,11 @@ public class APIRestmethod {
 	public void setAPIRestresources(List<APIRestressource> aPIRestresources) {
 		APIRestresources = aPIRestresources;
 	}
-	public APIRestmethod(String nomMethode, String description, List<APIRestressource> aPIRestresources) {
+
+	public APIRestmethod(String idAPIRestmethod, String nomMethode, String description,
+			List<APIRestressource> aPIRestresources) {
 		super();
+		this.idAPIRestmethod = idAPIRestmethod;
 		this.nomMethode = nomMethode;
 		this.description = description;
 		APIRestresources = aPIRestresources;
@@ -36,6 +47,6 @@ public class APIRestmethod {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 
 }

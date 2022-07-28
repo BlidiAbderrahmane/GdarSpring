@@ -4,9 +4,16 @@ import java.util.List;
 
 public class APIRestclass {
 	
+	private String idAPIRestclass;
 	private String controller;
 	private List<APIRestmethod> APIRestmethods;
 	
+	public String getIdAPIRestclass() {
+		return idAPIRestclass;
+	}
+	public void setIdAPIRestclass(String idAPIRestclass) {
+		this.idAPIRestclass = idAPIRestclass;
+	}
 	public String getController() {
 		return controller;
 	}
@@ -19,8 +26,10 @@ public class APIRestclass {
 	public void setAPIRestmethods(List<APIRestmethod> aPIRestmethods) {
 		APIRestmethods = aPIRestmethods;
 	}
-	public APIRestclass(String controller, List<APIRestmethod> aPIRestmethods) {
+	
+	public APIRestclass(String idAPIRestclass, String controller, List<APIRestmethod> aPIRestmethods) {
 		super();
+		this.idAPIRestclass = idAPIRestclass;
 		this.controller = controller;
 		APIRestmethods = aPIRestmethods;
 	}

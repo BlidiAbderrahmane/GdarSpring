@@ -4,11 +4,19 @@ import java.util.List;
 
 public class APIRestproject {
 
+	private String idAPIRestproject;
 	private String projet;
 	private String version;
 	private List<APIRestclass> APIRestclasses;
-	
-	
+
+
+	public String getIdAPIRestproject() {
+		return idAPIRestproject;
+	}
+
+	public void setIdAPIRestproject(String idAPIRestproject) {
+		this.idAPIRestproject = idAPIRestproject;
+	}
 	
 	public String getProjet() {
 		return projet;
@@ -34,8 +42,11 @@ public class APIRestproject {
 		APIRestclasses = aPIRestclasses;
 	}
 
-	public APIRestproject(String projet, String version, List<APIRestclass> aPIRestclasses) {
+	
+
+	public APIRestproject(String idAPIRestproject, String projet, String version, List<APIRestclass> aPIRestclasses) {
 		super();
+		this.idAPIRestproject = idAPIRestproject;
 		this.projet = projet;
 		this.version = version;
 		APIRestclasses = aPIRestclasses;
@@ -48,9 +59,15 @@ public class APIRestproject {
 
 	@Override
 	public String toString() {
-		return "APIRestproject [projet=" + projet + ", version=" + version + ", APIRestclasses=" + APIRestclasses + "]";
+		return "APIRestproject [idAPIRestproject=" + idAPIRestproject + ", projet=" + projet + ", version=" + version
+				+ ", APIRestclasses=" + APIRestclasses + ", getIdAPIRestproject()=" + getIdAPIRestproject()
+				+ ", getProjet()=" + getProjet() + ", getVersion()=" + getVersion() + ", getAPIRestclasses()="
+				+ getAPIRestclasses() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
-
 	
+
+
+
 }

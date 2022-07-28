@@ -3,12 +3,22 @@ package com.esprit.entities;
 import java.util.List;
 
 public class APIRestressource {
+	
+	private String idAPIRestressource;
 	private String api;
 	private String ressource;
 	private String verbHTTP;
 	
 	
 	
+	public String getIdAPIRestressource() {
+		return idAPIRestressource;
+	}
+
+	public void setIdAPIRestressource(String idAPIRestressource) {
+		this.idAPIRestressource = idAPIRestressource;
+	}
+
 	public String getApi() {
 		return api;
 	}
@@ -33,8 +43,11 @@ public class APIRestressource {
 		this.verbHTTP = verbHTTP;
 	}
 
-	public APIRestressource(String api, String ressource, String verbHTTP) {
+	
+
+	public APIRestressource(String idAPIRestressource, String api, String ressource, String verbHTTP) {
 		super();
+		this.idAPIRestressource = idAPIRestressource;
 		this.api = api;
 		this.ressource = ressource;
 		this.verbHTTP = verbHTTP;

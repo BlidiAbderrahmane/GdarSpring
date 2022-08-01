@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.esprit.entities.APIRest;
 import com.esprit.entities.APIRestclass;
+import com.esprit.entities.APIRestmethod;
 import com.esprit.entities.APIRestproject;
 import com.esprit.entities.Classe;
 import com.esprit.entities.Projet;
@@ -27,25 +28,25 @@ public class ProjectsServiceImpl implements IPorjectsService{
 		List<Projet> documentation= new ArrayList<Projet>() ;
 
 		ObjectMapper mapper= new ObjectMapper();
-		
-			Projets lp;
-			try {
-				lp = mapper.readValue(new File ("data/documentation.json"), Projets.class);
-				documentation= lp.getProjets();
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+		Projets lp;
+		try {
+			lp = mapper.readValue(new File ("data/documentation.json"), Projets.class);
+			documentation= lp.getProjets();
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
 
-		
+
 		return documentation;
 
 	}
@@ -59,11 +60,11 @@ public class ProjectsServiceImpl implements IPorjectsService{
 			return null;
 		}
 		else {
-			APIRest rapi = new APIRest();
+			APIRest rl = new APIRest();
 			List<APIRestproject> pl = new ArrayList<APIRestproject>();
 			if(f.getProjet()!="") {
 				for(int i=0 ; i< l1.size(); i++) {
-					if(f.getProjet().equals( l1.get(i).getNomProjet() )) {
+					if( l1.get(i).getNomProjet().startsWith(f.getProjet()) ) {
 						APIRestproject rproject= new APIRestproject();
 						rproject.setIdAPIRestproject(l1.get(i).getIdProject());
 						rproject.setProjet(l1.get(i).getNomProjet());
@@ -71,7 +72,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 						pl.add(rproject);
 					}
 				}
-				rapi.setAPIRestprojects(pl);
+				rl.setAPIRestprojects(pl);
 
 			}
 			else {
@@ -83,9 +84,9 @@ public class ProjectsServiceImpl implements IPorjectsService{
 					rproject.setVersion(l1.get(i).getVersion());
 					pl.add(rproject);
 				}
-				rapi.setAPIRestprojects(pl);
+				rl.setAPIRestprojects(pl);
 			}
-			return searchAPIClasses(rapi,l1,f) ; 
+			return searchAPIClasses(rl,l1,f) ; 
 		}
 
 	}
@@ -96,7 +97,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
 				List<APIRestclass> rcs = new ArrayList<APIRestclass>() ;
 				for(int j=0;j<l1.size();j++) {
-					if(l1.get(j).getNomProjet().equals( rl.getAPIRestprojects().get(i).getProjet())) {
+					if(l1.get(j).getNomProjet().startsWith( rl.getAPIRestprojects().get(i).getProjet())) {
 						for (int k=0;k<l1.get(j).getClasses().size();k++) {
 							APIRestclass rc = new APIRestclass();
 							rc.setIdAPIRestclass(l1.get(j).getClasses().get(k).getIdClass());
@@ -112,17 +113,18 @@ public class ProjectsServiceImpl implements IPorjectsService{
 			ArrayList<String> projToDel = new ArrayList<String>();
 			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
 				List<APIRestclass> rcs = new ArrayList<APIRestclass>() ;
-				boolean Rlfounded =false;
+				boolean  Rlfounded =false;
 				for(int j=0;j<l1.size();j++) {
-					
+
 					if(l1.get(j).getNomProjet().equals( rl.getAPIRestprojects().get(i).getProjet())) {
-						
+
 						boolean found =false;
 						int k=0;
 						while(k<l1.get(j).getClasses().size()) {
-							if(f.getController().equals( l1.get(j).getClasses().get(k).getNomClass() )) {
+							if(l1.get(j).getClasses().get(k).getNomClass().startsWith(f.getController()) ) {
 								Rlfounded = true;
 								found=true;
+
 								APIRestclass rc = new APIRestclass();
 								rc.setIdAPIRestclass(l1.get(j).getClasses().get(k).getIdClass());
 								rc.setController(l1.get(j).getClasses().get(k).getNomClass());
@@ -139,44 +141,95 @@ public class ProjectsServiceImpl implements IPorjectsService{
 				}
 
 				if(Rlfounded) {
-				rl.getAPIRestprojects().get(i).setAPIRestclasses(rcs);
+					rl.getAPIRestprojects().get(i).setAPIRestclasses(rcs);
 				}
 
 			}
-			
-				for(int i=0;i<projToDel.size();i++) {
-					int j=0;
-					boolean found=false;
-					while(j<rl.getAPIRestprojects().size() && !found) {
-						if(projToDel.get(i).equals(rl.getAPIRestprojects().get(j).getIdAPIRestproject())) {
-							rl.getAPIRestprojects().remove(rl.getAPIRestprojects().get(j));
-							found=true;
-						}
-						j++;
+
+			for(int i=0;i<projToDel.size();i++) {
+				int j=0;
+				boolean found=false;
+				while(j<rl.getAPIRestprojects().size() && !found) {
+					if(projToDel.get(i).equals(rl.getAPIRestprojects().get(j).getIdAPIRestproject())) {
+						rl.getAPIRestprojects().remove(rl.getAPIRestprojects().get(j));
+						found=true;
 					}
+					j++;
 				}
-			
-			
+			}
+
+
 		}
 
 		return rl;
 
 	}
 
-	/*@Override
-	public List<APIRest> searchAPIMethod(APIRest l1, List<Projet> Lp, SearchCritiria f) {
-		// TODO Auto-generated method stub
+	/*
+	@Override
+	public APIRest searchAPIMethod(APIRest rl, List<Projet> l1, SearchCritiria f) {
+		if(f.getMethode()=="" && f.getDescription()=="") {
+
+		}
+		else {
+			if(f.getMethode()!="") {
+
+
+				for(int i=0;i<rl.getAPIRestprojects().size();i++) {
+					List<APIRestclass> rcs = new ArrayList<APIRestclass>() ;
+					boolean  Rlfounded =false;
+					for(int j=0;j<l1.size();j++) {
+
+						if(l1.get(j).getNomProjet().equals( rl.getAPIRestprojects().get(i).getProjet())) {
+
+							for(int k=0;k<l1.get(j).getClasses().size();k++) {	
+								if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(k).getController()) )  {
+									for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
+										if( (f.getDescription()!="") &&  (l1.get(j).getClasses().get(k).getMethods().get(m).getDescription().startsWith(f.getDescription()))
+										&& (l1.get(j).getClasses().get(k).getMethods().get(m).getIdMethod().startsWith(f.getMethode()) ) ){
+											
+										APIRestmethod rm= new APIRestmethod();
+										rm.setIdAPIRestmethod(l1.get(j).getClasses().get(k).getMethods().get(m).getIdMethod());
+										rm.setNomMethode(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod());
+										
+											
+										}
+										else if( (f.getDescription()!="")&&(l1.get(j).getClasses().get(k).getMethods().get(m).getIdMethod().startsWith(f.getMethode()) ) ) {
+											
+										}
+										else {
+											
+										}
+									}
+								}
+							}
+
+
+						}
+					}
+
+					if(Rlfounded) {
+						rl.getAPIRestprojects().get(i).setAPIRestclasses(rcs);
+					}
+
+				}
+
+
+
+			}
+		}
 		return null;
 	} 
 
+	
 	@Override
-	public List<APIRest> searchAPICodeErreur(List<Projet> Lp, SearchCritiria f) {
+	public APIRest searchAPICodeErreur(List<Projet> Lp, SearchCritiria f) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<APIRest> searchAPICriteresHTTP(List<Projet> Lp, SearchCritiria f) {
+	public APIRest searchAPICriteresHTTP(List<Projet> Lp, SearchCritiria f) {
 		// TODO Auto-generated method stub
 		return null;
 	}

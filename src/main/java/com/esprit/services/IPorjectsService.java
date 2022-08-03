@@ -11,8 +11,8 @@ public interface IPorjectsService {
 	public List<Projet> getDocumentations(); 
 	public APIRest searchAPIProject(SearchCritiria f);
 	public APIRest searchAPIClasses(APIRest rl,List<Projet> l1, SearchCritiria f);
-	/*public APIRest searchAPIMethod(APIRest rl,List<Projet> l1,SearchCritiria f);
-	public APIRest searchAPICodeErreur(List<Projet> l1, SearchCritiria f);
+	public APIRest searchAPIMethod(APIRest rl,List<Projet> l1,SearchCritiria f);
+	/*public APIRest searchAPICodeErreur(List<Projet> l1, SearchCritiria f);
 	public APIRest searchAPICriteresHTTP(List<Projet> l1, SearchCritiria f);
 	*/
 }

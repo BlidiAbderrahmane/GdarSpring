@@ -18,7 +18,7 @@ import com.esprit.services.IPorjectsService;
 
 
 @RestController
-public class Projects_RestController {
+public class ProjectsRestController {
 	@Autowired
 	IPorjectsService projServ;
 	//http://localhost:8081/getAll

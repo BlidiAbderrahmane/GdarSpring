@@ -12,7 +12,7 @@ public interface IPorjectsService {
 	public APIRest searchAPIProject(SearchCritiria f);
 	public APIRest searchAPIClasses(APIRest rl,List<Projet> l1, SearchCritiria f);
 	public APIRest searchAPIMethod(APIRest rl,List<Projet> l1,SearchCritiria f);
-	/*public APIRest searchAPICodeErreur(List<Projet> l1, SearchCritiria f);
-	public APIRest searchAPICriteresHTTP(List<Projet> l1, SearchCritiria f);
-	*/
+	public APIRest searchAPICodeErreur(APIRest rl,List<Projet> l1, SearchCritiria f);
+	//public APIRest searchAPICriteresHTTP(APIRest rl,List<Projet> l1, SearchCritiria f);
+	
 }

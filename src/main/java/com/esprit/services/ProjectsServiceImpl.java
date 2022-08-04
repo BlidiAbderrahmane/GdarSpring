@@ -374,8 +374,6 @@ public class ProjectsServiceImpl implements IPorjectsService{
 	public APIRest searchAPICodeErreur(APIRest rl,List<Projet> l1, SearchCritiria f) {
 		if(f.getCodeErreur()!="") {
 
-			// ++++ // 
-
 			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
 				for(int j=0;j<l1.size();j++) {
 
@@ -499,8 +497,6 @@ public class ProjectsServiceImpl implements IPorjectsService{
 	@Override
 	public APIRest searchAPICriteresHTTP(APIRest rl,List<Projet> l1, SearchCritiria f) {
 		if(f.getUrlApi()=="" && f.getUrlRessource()=="") {
-			System.out.println("test");
-
 
 			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
 				for(int j=0;j<l1.size();j++) {
@@ -596,7 +592,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 													}
 
 												}
-												rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);
+												//rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);
 
 											}
 											if(!methodIsEmpty ) {
@@ -620,8 +616,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 			}
 			else {
 				if(f.getUrlRessource()!="") {
-					///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 					for(int i=0;i<rl.getAPIRestprojects().size();i++) {
 						for(int j=0;j<l1.size();j++) {
@@ -664,7 +659,6 @@ public class ProjectsServiceImpl implements IPorjectsService{
 														}
 
 													}
-													rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);
 
 												}
 												if(!methodIsEmpty ) {

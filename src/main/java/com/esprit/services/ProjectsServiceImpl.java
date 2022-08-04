@@ -496,6 +496,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 
 	@Override
 	public APIRest searchAPICriteresHTTP(APIRest rl,List<Projet> l1, SearchCritiria f) {
+		ArrayList<String> methToDel = new ArrayList<String>();
 		if(f.getUrlApi()=="" && f.getUrlRessource()=="") {
 
 			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
@@ -507,7 +508,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 							for(int k=0;k<l1.get(j).getClasses().size();k++) {
 
 								if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
-									
+
 									for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
 										List<APIRestressource> rrs= new ArrayList<APIRestressource>();
 										for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
@@ -557,8 +558,8 @@ public class ProjectsServiceImpl implements IPorjectsService{
 								for(int k=0;k<l1.get(j).getClasses().size();k++) {
 
 									if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
-										ArrayList<String> methToDel = new ArrayList<String>();
-										
+
+
 										boolean methodIsEmpty=true;
 										for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
 											List<APIRestressource> rrs= new ArrayList<APIRestressource>();
@@ -590,7 +591,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 														}
 													}
 													if(!found) {
-														methToDel.add(rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getIdAPIRestclass());	
+														methToDel.add(rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getIdAPIRestmethod());	
 													}
 
 												}
@@ -629,8 +630,8 @@ public class ProjectsServiceImpl implements IPorjectsService{
 									for(int k=0;k<l1.get(j).getClasses().size();k++) {
 
 										if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
-											ArrayList<String> methToDel = new ArrayList<String>();
-											
+
+
 											boolean methodIsEmpty=true;
 											for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
 												List<APIRestressource> rrs= new ArrayList<APIRestressource>();
@@ -658,7 +659,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 															}
 														}
 														if(!found) {
-															methToDel.add(rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getIdAPIRestclass());	
+															methToDel.add(rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getIdAPIRestmethod());	
 														}
 
 													}
@@ -666,76 +667,60 @@ public class ProjectsServiceImpl implements IPorjectsService{
 												}
 												if(!methodIsEmpty ) {
 													rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);
-
 												}
 											}
-
-											for(int a=0;a<methToDel.size();a++) {
-												for(int b=0;b<rl.getAPIRestprojects().size();b++) {
-													for(int c=0;c<rl.getAPIRestprojects().get(b).getAPIRestclasses().size();c++) {
-
-
-
-														int d=0;
-														boolean found=false;
-														while(d<rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().size() && !found) {
-															if(methToDel.get(a).equals(rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().get(d).getIdAPIRestmethod())) {
-																rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().remove(rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().get(d));
-																found=true;
-															}
-															d++;
-														}
-													}
-
-												}	
-											} 
-
-
 										}
-
-
 									}
-
-								}
-
-							}
-
-
-							ArrayList<String> classToDel = new ArrayList<String>();
-							for(int k=0;k<rl.getAPIRestprojects().size();k++) {
-								for(int m=0;m<rl.getAPIRestprojects().get(k).getAPIRestclasses().size();m++) {
-
-									if(rl.getAPIRestprojects().get(k).getAPIRestclasses().get(m).getAPIRestmethods().size() == 0) {
-										classToDel.add(rl.getAPIRestprojects().get(k).getAPIRestclasses().get(m).getIdAPIRestclass());	
-									}
-
 								}
 							}
-							for(int k=0;k<classToDel.size();k++) {
-								for(int m=0;m<rl.getAPIRestprojects().size();m++) {
-
-									int l=0;
-									boolean found=false;
-									while(l<rl.getAPIRestprojects().get(m).getAPIRestclasses().size() && !found) {
-										if(classToDel.get(k).equals(rl.getAPIRestprojects().get(m).getAPIRestclasses().get(l).getIdAPIRestclass())) {
-											rl.getAPIRestprojects().get(m).getAPIRestclasses().remove(rl.getAPIRestprojects().get(m).getAPIRestclasses().get(l));
-											found=true;
-										}
-										l++;
-									}
-
-								}
-							}
-
-
 						}
-
-
-
-
 					}
-
 				}
+			}
+		}
+		for(int a=0;a<methToDel.size();a++) {
+			for(int b=0;b<rl.getAPIRestprojects().size();b++) {
+				for(int c=0;c<rl.getAPIRestprojects().get(b).getAPIRestclasses().size();c++) {
+
+
+
+					int d=0;
+					boolean found=false;
+					while(d<rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().size() && !found) {
+						if(methToDel.get(a).equals(rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().get(d).getIdAPIRestmethod())) {
+							rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().remove(rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().get(d));
+							found=true;
+						}
+						d++;
+					}
+				}
+
+			}	
+		} 
+
+		ArrayList<String> classToDel = new ArrayList<String>();
+		for(int k=0;k<rl.getAPIRestprojects().size();k++) {
+			for(int m=0;m<rl.getAPIRestprojects().get(k).getAPIRestclasses().size();m++) {
+
+				if(rl.getAPIRestprojects().get(k).getAPIRestclasses().get(m).getAPIRestmethods().size() == 0) {
+					classToDel.add(rl.getAPIRestprojects().get(k).getAPIRestclasses().get(m).getIdAPIRestclass());	
+				}
+
+			}
+		}
+		for(int k=0;k<classToDel.size();k++) {
+			for(int m=0;m<rl.getAPIRestprojects().size();m++) {
+
+				int l=0;
+				boolean found=false;
+				while(l<rl.getAPIRestprojects().get(m).getAPIRestclasses().size() && !found) {
+					if(classToDel.get(k).equals(rl.getAPIRestprojects().get(m).getAPIRestclasses().get(l).getIdAPIRestclass())) {
+						rl.getAPIRestprojects().get(m).getAPIRestclasses().remove(rl.getAPIRestprojects().get(m).getAPIRestclasses().get(l));
+						found=true;
+					}
+					l++;
+				}
+
 			}
 		}
 		ArrayList<String> projToDel = new ArrayList<String>();

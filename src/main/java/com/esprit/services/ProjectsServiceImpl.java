@@ -507,8 +507,9 @@ public class ProjectsServiceImpl implements IPorjectsService{
 							for(int k=0;k<l1.get(j).getClasses().size();k++) {
 
 								if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
-									List<APIRestressource> rrs= new ArrayList<APIRestressource>();
+									
 									for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
+										List<APIRestressource> rrs= new ArrayList<APIRestressource>();
 										for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
 
 											if(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getNomMethode()) ) {
@@ -557,9 +558,10 @@ public class ProjectsServiceImpl implements IPorjectsService{
 
 									if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
 										ArrayList<String> methToDel = new ArrayList<String>();
-										List<APIRestressource> rrs= new ArrayList<APIRestressource>();
+										
 										boolean methodIsEmpty=true;
 										for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
+											List<APIRestressource> rrs= new ArrayList<APIRestressource>();
 											for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
 
 												if(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getNomMethode()) ) {
@@ -628,9 +630,10 @@ public class ProjectsServiceImpl implements IPorjectsService{
 
 										if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
 											ArrayList<String> methToDel = new ArrayList<String>();
-											List<APIRestressource> rrs= new ArrayList<APIRestressource>();
+											
 											boolean methodIsEmpty=true;
 											for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
+												List<APIRestressource> rrs= new ArrayList<APIRestressource>();
 												for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
 
 													if(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getNomMethode()) ) {

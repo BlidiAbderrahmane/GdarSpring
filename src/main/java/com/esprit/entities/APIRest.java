@@ -27,10 +27,17 @@ public class APIRest {
 		APIRestprojects=rl.APIRestprojects;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "APIRest [APIRestprojects=" + APIRestprojects + "]";
+		return "APIRest [APIRestprojects=" + APIRestprojects + ", getAPIRestprojects()=" + getAPIRestprojects()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
+
+
 	
 	
 }

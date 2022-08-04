@@ -210,6 +210,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 
 
 		}
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		else {
 			if(f.getMethode()!="") {
 
@@ -371,7 +372,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 
 	@Override
 	public APIRest searchAPICodeErreur(APIRest rl,List<Projet> l1, SearchCritiria f) {
-		if(f.getCodeErreur()=="") {
+		if(f.getCodeErreur()!="") {
 
 
 
@@ -382,29 +383,155 @@ public class ProjectsServiceImpl implements IPorjectsService{
 
 						for(int o=0;o<rl.getAPIRestprojects().get(i).getAPIRestclasses().size();o++) {
 							for(int k=0;k<l1.get(j).getClasses().size();k++) {
-								if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
 
+								if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
+									ArrayList<String> methToDel = new ArrayList<String>();
 									for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
-										List<APIRestressource> rrs= new ArrayList<APIRestressource>();
 										for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
+
 											if(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getNomMethode()) ) {
+												boolean found=false;
+
 												if (l1.get(j).getClasses().get(k).getMethods().get(m).getFunctionalErrors() != null) {
+													for(int q=0;q<l1.get(j).getClasses().get(k).getMethods() .get(m).getFunctionalErrors().size();q++) {
+														if( l1.get(j).getClasses().get(k).getMethods().get(m).getFunctionalErrors().get(q).getCode().startsWith(f.getCodeErreur()) ) {
+															found=true;
+															System.out.println("code err : " + l1.get(j).getClasses().get(k).getMethods().get(m).getFunctionalErrors().get(q).getCode());
+														}
+													}
+												}
+												if(!found) {
+													methToDel.add(rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getIdAPIRestmethod());	
+												}
+
+											}
+
+										}
+									}
+
+									for(int a=0;a<methToDel.size();a++) {
+										for(int b=0;b<rl.getAPIRestprojects().size();b++) {
+											for(int c=0;c<rl.getAPIRestprojects().get(b).getAPIRestclasses().size();c++) {
+
+
+
+												int d=0;
+												boolean found=false;
+												while(d<rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().size() && !found) {
+													if(methToDel.get(a).equals(rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().get(d).getIdAPIRestmethod())) {
+														rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().remove(rl.getAPIRestprojects().get(b).getAPIRestclasses().get(c).getAPIRestmethods().get(d));
+														found=true;
+													}
+													d++;
+												}
+											}
+
+										}	
+									} 
+
+
+								}
+
+
+							}
+
+						}
+
+					}
+
+					
+					ArrayList<String> classToDel = new ArrayList<String>();
+					for(int k=0;k<rl.getAPIRestprojects().size();k++) {
+						for(int m=0;m<rl.getAPIRestprojects().get(k).getAPIRestclasses().size();m++) {
+
+							if(rl.getAPIRestprojects().get(k).getAPIRestclasses().get(m).getAPIRestmethods().size() == 0) {
+								classToDel.add(rl.getAPIRestprojects().get(k).getAPIRestclasses().get(m).getIdAPIRestclass());	
+							}
+
+						}
+					}
+					for(int k=0;k<classToDel.size();k++) {
+						for(int m=0;m<rl.getAPIRestprojects().size();m++) {
+
+							int l=0;
+							boolean found=false;
+							while(l<rl.getAPIRestprojects().get(m).getAPIRestclasses().size() && !found) {
+								if(classToDel.get(k).equals(rl.getAPIRestprojects().get(m).getAPIRestclasses().get(l).getIdAPIRestclass())) {
+									rl.getAPIRestprojects().get(m).getAPIRestclasses().remove(rl.getAPIRestprojects().get(m).getAPIRestclasses().get(l));
+									found=true;
+								}
+								l++;
+							}
+							
+						}
+					}
+					
+
+				}
+
+
+
+
+			}
+		}
+		
+		ArrayList<String> projToDel = new ArrayList<String>();
+		for(int i=0;i<rl.getAPIRestprojects().size();i++) {
+			if(rl.getAPIRestprojects().get(i).getAPIRestclasses().size() == 0) {
+				projToDel.add(rl.getAPIRestprojects().get(i).getIdAPIRestproject());	
+			}
+		}
+		for(int i=0;i<projToDel.size();i++) {
+			int j=0;
+			boolean found=false;
+			while(j<rl.getAPIRestprojects().size() && !found) {
+				if(projToDel.get(i).equals(rl.getAPIRestprojects().get(j).getIdAPIRestproject())) {
+					rl.getAPIRestprojects().remove(rl.getAPIRestprojects().get(j));
+					found=true;
+				}
+				j++;
+			}
+		}
+		
+		return searchAPICriteresHTTP(rl,l1,f);
+	}
+
+	
+	@Override
+	public APIRest searchAPICriteresHTTP(APIRest rl,List<Projet> l1, SearchCritiria f) {
+		if(f.getUrlApi()=="" && f.getUrlRessource()=="") {
+			System.out.println("test");
+
+
+			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
+				for(int j=0;j<l1.size();j++) {
+
+					if(l1.get(j).getNomProjet().equals( rl.getAPIRestprojects().get(i).getProjet())) {
+
+						for(int o=0;o<rl.getAPIRestprojects().get(i).getAPIRestclasses().size();o++) {
+							for(int k=0;k<l1.get(j).getClasses().size();k++) {
+
+								if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
+									List<APIRestressource> rrs= new ArrayList<APIRestressource>();
+									for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
+										for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
+
+											if(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getNomMethode()) ) {
+												if (l1.get(j).getClasses().get(k).getMethods().get(m).getResources() != null) {
 													for(int q=0;q<l1.get(j).getClasses().get(k).getMethods().get(m).getResources().size();q++) {
 														APIRestressource rr= new APIRestressource();
 														rr.setIdAPIRestressource(l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getIdRessource());													
 														rr.setApi(l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlApi());
 														rr.setRessource(l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlRessource());
 														rr.setVerbHTTP(l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getVerbHttp());
-														rr.toString();
 														rrs.add(rr);
-														System.out.println("teeeeeeeeeeeeeeeeeeeeeeeeeeeesssst");
 													}
 												}
 
 											}
-										}
-										rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);;
+											rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);
 
+										}
 									}
 
 								}
@@ -423,16 +550,74 @@ public class ProjectsServiceImpl implements IPorjectsService{
 
 
 		}
+		else {
+			
+		}
+		/*
+		else {
+			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
+				for(int j=0;j<l1.size();j++) {
+
+					if(l1.get(j).getNomProjet().equals( rl.getAPIRestprojects().get(i).getProjet())) {
+
+						for(int o=0;o<rl.getAPIRestprojects().get(i).getAPIRestclasses().size();o++) {
+							for(int k=0;k<l1.get(j).getClasses().size();k++) {
+
+								if(l1.get(j).getClasses().get(k).getNomClass().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getController()) )  {
+									ArrayList<String> methToDel = new ArrayList<String>();
+									List<APIRestressource> rrs= new ArrayList<APIRestressource>();
+									boolean methodIsEmpty=true;
+									for(int p=0;p<rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().size();p++) {
+										for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
+
+											if(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod().equals( rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).getNomMethode()) ) {
+												boolean found=false;
+
+												if (l1.get(j).getClasses().get(k).getMethods().get(m).getResources() != null) {
+													for(int q=0;q<l1.get(j).getClasses().get(k).getMethods().get(m).getResources().size();q++) {
+														if( l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlRessource().startsWith(f.getUrlRessource()) ) {
+															methodIsEmpty=false;
+															found=true;
+															APIRestressource rr= new APIRestressource();
+															rr.setIdAPIRestressource(l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getIdRessource());													
+															rr.setApi(l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlApi());
+															rr.setRessource(l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlRessource());
+															rr.setVerbHTTP(l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getVerbHttp());
+															rrs.add(rr);
+														}
+													}
+												}
+												if(!found) {
+													methToDel.add(rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getIdAPIRestclass());	
+												}
+
+											}
+											rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);
+
+										}
+										if(!methodIsEmpty ) {
+											rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);;
+
+										}
+									}
+
+
+								}
+
+
+							}
+
+						}
+
+					}
+				}
+
+			}
+		}
+		*/
 		return rl;
 	}
 
-	/*
-	@Override
-	public APIRest searchAPICriteresHTTP(List<Projet> Lp, SearchCritiria f) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	 */
+	 
 
 }

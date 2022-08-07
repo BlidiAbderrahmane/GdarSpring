@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esprit.entities.APIRest;
+import com.esprit.entities.Details;
 import com.esprit.entities.Projet;
 import com.esprit.entities.SearchCritiria;
+import com.esprit.entities.SearchDetailsCritiria;
 import com.esprit.services.IPorjectsService;
 
 
@@ -44,6 +46,14 @@ public class ProjectsRestController {
 	@ResponseBody
 	public APIRest searchAPIProject(@RequestBody SearchCritiria f) {
 		return projServ.searchAPIProject(f);
+			
+	}
+	
+	@PostMapping("/searchAPIDetail")
+	//@RequestMapping(value = "/searchAPIProject", method = RequestMethod.POST, consumes="application/json")
+	@ResponseBody
+	public Details searchAPIDetails(@RequestBody SearchDetailsCritiria f) {
+		return projServ.searchAPIDetails(f);
 			
 	}
 

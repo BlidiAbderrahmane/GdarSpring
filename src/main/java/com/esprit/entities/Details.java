@@ -18,8 +18,8 @@ public class Details {
 	public String getRessource() {
 		return ressource;
 	}
-	public void setRessource(String ressource) {
-		this.ressource = ressource;
+	public void setRessource(String string) {
+		this.ressource = string;
 	}
 	public List<OEParams> getOeParams() {
 		return oeParams;

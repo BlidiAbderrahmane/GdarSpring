@@ -14,9 +14,11 @@ import com.esprit.entities.APIRestmethod;
 import com.esprit.entities.APIRestproject;
 import com.esprit.entities.APIRestressource;
 import com.esprit.entities.Classe;
+import com.esprit.entities.Details;
 import com.esprit.entities.Projet;
 import com.esprit.entities.Projets;
 import com.esprit.entities.SearchCritiria;
+import com.esprit.entities.SearchDetailsCritiria;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,12 +39,15 @@ public class ProjectsServiceImpl implements IPorjectsService{
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			e.getMessage();
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			e.getMessage();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			e.getMessage();
 		}
 
 
@@ -741,6 +746,45 @@ public class ProjectsServiceImpl implements IPorjectsService{
 			}
 		}
 		return rl;
+	}
+
+	@Override
+	public Details searchAPIDetails (SearchDetailsCritiria f) {
+		List<Projet> l1 = getDocumentations();
+		Details d = new Details();
+		int i=0;
+		boolean foundp=false;
+		while(i<l1.size() && !foundp) {
+			if(l1.get(i).getIdProject().equals(f.getIdProjet())) {
+				foundp=true;
+				int j=0;
+				boolean foundc=false;
+				while(j<l1 .get(i).getClasses().size() && !foundc) {
+					if(l1.get(i).getClasses().get(j).getIdClass().equals(f.getIdClass())) {
+						foundc=true;
+						int k=0;
+						boolean foundm=false;
+						while(k<l1 .get(i).getClasses().get(j).getMethods().size() && !foundm) {
+							if(l1.get(i).getClasses().get(j).getMethods().get(k).getIdMethod().equals(f.getIdMethod())) {
+								foundm=true;
+								d.setApi(l1.get(i).getClasses().get(j).getMethods().get(k).getResources().get(0).getUrlApi());
+								d.setFunctionalErrors(l1.get(i).getClasses().get(j).getMethods().get(k).getFunctionalErrors());
+								d.setHttpParams(l1.get(i).getClasses().get(j).getMethods().get(k).getResources().get(0).getHttpParams());
+								d.setOeParams(l1.get(i).getClasses().get(j).getMethods().get(k).getOeParams());
+								d.setRessource(l1.get(i).getClasses().get(j).getMethods().get(k).getResources().get(0).getUrlRessource());
+							}
+							k++;
+						}
+					}
+					j++;
+				}
+
+
+			}
+
+			i++;
+		}
+		return d;
 	}
 
 

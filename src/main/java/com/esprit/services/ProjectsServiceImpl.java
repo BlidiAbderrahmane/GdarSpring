@@ -91,11 +91,11 @@ public class ProjectsServiceImpl implements IPorjectsService{
 				}
 				rl.setAPIRestprojects(pl);
 			}
-			return searchAPIClasses(rl,l1,f) ; 
+			return searchAPIClasses(rl, l1,f); 
 		}
 
 	}
-
+	
 	@Override
 	public APIRest searchAPIClasses( APIRest rl, List<Projet> l1, SearchCritiria f) {
 		if(f.getController()=="") {
@@ -600,7 +600,6 @@ public class ProjectsServiceImpl implements IPorjectsService{
 													}
 
 												}
-												//rl.getAPIRestprojects().get(i).getAPIRestclasses().get(o).getAPIRestmethods().get(p).setAPIRestresources(rrs);
 
 											}
 											if(!methodIsEmpty ) {

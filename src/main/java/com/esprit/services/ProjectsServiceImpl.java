@@ -9,7 +9,6 @@ import com.esprit.entities.APIRestclass;
 import com.esprit.entities.APIRestmethod;
 import com.esprit.entities.APIRestproject;
 import com.esprit.entities.APIRestressource;
-import com.esprit.entities.Classe;
 import com.esprit.entities.Details;
 import com.esprit.entities.Projet;
 import com.esprit.entities.Projets;

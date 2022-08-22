@@ -3,6 +3,7 @@ package com.esprit.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +32,8 @@ public class ProjectsRestController {
 		return "test";
 	}
     
-    
-    @PostMapping("/searchAllProjects")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/searchAllProjects")
   //@RequestMapping(value = "/searchAPIProject", method = RequestMethod.POST, consumes="application/json")
   	@ResponseBody
   	public List<Projet> searchAPIProject() {
@@ -40,7 +41,7 @@ public class ProjectsRestController {
   			
   	}
     
-    
+    @CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/searchAPIProject")
 	//@RequestMapping(value = "/searchAPIProject", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody

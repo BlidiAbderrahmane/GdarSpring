@@ -49,7 +49,7 @@ public class ProjectsRestController {
 		return projServ.searchAPIProject(f);
 			
 	}
-	
+    @CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/searchAPIDetail")
 	//@RequestMapping(value = "/searchAPIProject", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody

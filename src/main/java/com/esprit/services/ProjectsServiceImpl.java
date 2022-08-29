@@ -51,7 +51,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 			List<APIRestproject> pl = new ArrayList<APIRestproject>();
 			if(f.getProjet()!="") {
 				for(int i=0 ; i< l1.size(); i++) {
-					if( l1.get(i).getNomProjet().startsWith(f.getProjet()) ) {
+					if( l1.get(i).getNomProjet().toUpperCase().startsWith(f.getProjet().toUpperCase()) ) {
 						APIRestproject rproject= new APIRestproject();
 						rproject.setIdAPIRestproject(l1.get(i).getIdProject());
 						rproject.setProjet(l1.get(i).getNomProjet());
@@ -81,7 +81,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 			for(int i=0;i<rl.getAPIRestprojects().size();i++) {
 				List<APIRestclass> rcs = new ArrayList<APIRestclass>() ;
 				for(int j=0;j<l1.size();j++) {
-					if(l1.get(j).getNomProjet().startsWith( rl.getAPIRestprojects().get(i).getProjet())) {
+					if(l1.get(j).getNomProjet().toUpperCase().startsWith( rl.getAPIRestprojects().get(i).getProjet().toUpperCase())) {
 						for (int k=0;k<l1.get(j).getClasses().size();k++) {
 							APIRestclass rc = new APIRestclass();
 							rc.setIdAPIRestclass(l1.get(j).getClasses().get(k).getIdClass());
@@ -103,7 +103,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 						boolean found =false;
 						int k=0;
 						while(k<l1.get(j).getClasses().size()) {
-							if(l1.get(j).getClasses().get(k).getNomClass().startsWith(f.getController()) ) {
+							if(l1.get(j).getClasses().get(k).getNomClass().toUpperCase().startsWith(f.getController().toUpperCase()) ) {
 								Rlfounded = true;
 								found=true;
 								APIRestclass rc = new APIRestclass();
@@ -178,9 +178,9 @@ public class ProjectsServiceImpl implements IPorjectsService{
 										boolean found=false;
 										if (l1.get(j).getClasses().get(k).getMethods() != null) {
 											for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
-												if(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod().startsWith(f.getMethode()) ) {
+												if(l1.get(j).getClasses().get(k).getMethods().get(m).getNomMethod().toUpperCase().startsWith(f.getMethode().toUpperCase()) ) {
 													if( 
-															( (f.getDescription()!="") && (l1.get(j).getClasses().get(k).getMethods().get(m).getDescription().contains(f.getDescription())) )
+															( (f.getDescription()!="") && (l1.get(j).getClasses().get(k).getMethods().get(m).getDescription().toUpperCase().contains(f.getDescription().toUpperCase())) )
 															||(f.getDescription()=="")
 															) {
 														classIsEmpty=false;
@@ -234,7 +234,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 											boolean found=false;
 											if (l1.get(j).getClasses().get(k).getMethods() != null) {
 												for(int m=0;m<l1.get(j).getClasses().get(k).getMethods().size();m++) {
-													if( l1.get(j).getClasses().get(k).getMethods().get(m).getDescription().contains(f.getDescription()) ) {
+													if( l1.get(j).getClasses().get(k).getMethods().get(m).getDescription().toUpperCase().contains(f.getDescription().toUpperCase()) ) {
 														classIsEmpty=false;
 														found=true;
 														APIRestmethod rm= new APIRestmethod();
@@ -309,7 +309,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 												boolean found=false;
 												if (l1.get(j).getClasses().get(k).getMethods().get(m).getFunctionalErrors() != null) {
 													for(int q=0;q<l1.get(j).getClasses().get(k).getMethods() .get(m).getFunctionalErrors().size();q++) {
-														if( l1.get(j).getClasses().get(k).getMethods().get(m).getFunctionalErrors().get(q).getCode().contains(f.getCodeErreur()) ) {
+														if( l1.get(j).getClasses().get(k).getMethods().get(m).getFunctionalErrors().get(q).getCode().toUpperCase().contains(f.getCodeErreur().toUpperCase()) ) {
 															found=true;
 														}
 													}
@@ -434,9 +434,9 @@ public class ProjectsServiceImpl implements IPorjectsService{
 													boolean found=false;
 													if (l1.get(j).getClasses().get(k).getMethods().get(m).getResources() != null) {
 														for(int q=0;q<l1.get(j).getClasses().get(k).getMethods().get(m).getResources().size();q++) {
-															if( l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlApi().startsWith(f.getUrlApi()) ) {
+															if( l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlApi().toUpperCase().contains(f.getUrlApi().toUpperCase()) ) {
 																if( 
-																		( (f.getUrlRessource()!="") && ( l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlRessource().startsWith(f.getUrlRessource()) ) )
+																		( (f.getUrlRessource()!="") && ( l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlRessource().toUpperCase().contains(f.getUrlRessource().toUpperCase()) ) )
 																		||(f.getUrlRessource()=="")
 																		) {
 																	methodIsEmpty=false;
@@ -483,7 +483,7 @@ public class ProjectsServiceImpl implements IPorjectsService{
 														boolean found=false;
 														if (l1.get(j).getClasses().get(k).getMethods().get(m).getResources() != null) {
 															for(int q=0;q<l1.get(j).getClasses().get(k).getMethods().get(m).getResources().size();q++) {
-																if( l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlRessource().startsWith(f.getUrlRessource()) ) {
+																if( l1.get(j).getClasses().get(k).getMethods().get(m).getResources().get(q).getUrlRessource().toUpperCase().contains(f.getUrlRessource().toUpperCase()) ) {
 																	methodIsEmpty=false;
 																	found=true;
 																	APIRestressource rr= new APIRestressource();
@@ -576,17 +576,17 @@ public class ProjectsServiceImpl implements IPorjectsService{
 		int i=0;
 		boolean foundp=false;
 		while(i<l1.size() && !foundp) {
-			if(l1.get(i).getIdProject().equals(f.getIdProjet())) {
+			if(l1.get(i).getIdProject().toUpperCase().equals(f.getIdProjet().toUpperCase())) {
 				foundp=true;
 				int j=0;
 				boolean foundc=false;
 				while(j<l1 .get(i).getClasses().size() && foundp && !foundc) {
-					if(l1.get(i).getClasses().get(j).getIdClass().equals(f.getIdClass())) {
+					if(l1.get(i).getClasses().get(j).getIdClass().toUpperCase().equals(f.getIdClass().toUpperCase())) {
 						foundc=true;
 						int k=0;
 						boolean foundm=false;
 						while(k<l1 .get(i).getClasses().get(j).getMethods().size() && foundc && !foundm) {
-							if(l1.get(i).getClasses().get(j).getMethods().get(k).getIdMethod().equals(f.getIdMethod())) {
+							if(l1.get(i).getClasses().get(j).getMethods().get(k).getIdMethod().toUpperCase().equals(f.getIdMethod().toUpperCase())) {
 								foundm=true;
 								d.setApi(l1.get(i).getClasses().get(j).getMethods().get(k).getResources().get(0).getUrlApi());
 								d.setFunctionalErrors(l1.get(i).getClasses().get(j).getMethods().get(k).getFunctionalErrors());

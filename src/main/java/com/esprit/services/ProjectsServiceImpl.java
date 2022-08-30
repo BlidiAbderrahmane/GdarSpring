@@ -43,7 +43,6 @@ public class ProjectsServiceImpl implements IPorjectsService{
 	public APIRest searchAPIProject(SearchCritiria f) {
 		List<Projet> l1 = getDocumentations();
 		if(f.isEmpty()) {
-			System.out.println("les critères de recherche sont vides");
 			return null;
 		}
 		else {

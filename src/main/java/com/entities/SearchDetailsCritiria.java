@@ -1,4 +1,4 @@
-package com.esprit.entities;
+package com.entities;
 
 public class SearchDetailsCritiria {
 	private String idProjet;

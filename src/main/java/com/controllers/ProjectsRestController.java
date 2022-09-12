@@ -1,4 +1,4 @@
-package com.esprit.controllers;
+package com.controllers;
 
 import java.util.List;
 
@@ -12,34 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esprit.entities.APIRest;
-import com.esprit.entities.Details;
-import com.esprit.entities.Projet;
-import com.esprit.entities.SearchCritiria;
-import com.esprit.entities.SearchDetailsCritiria;
-import com.esprit.services.IPorjectsService;
+import com.entities.APIRest;
+import com.entities.Details;
+import com.entities.Projet;
+import com.entities.SearchCritiria;
+import com.entities.SearchDetailsCritiria;
+import com.services.IPorjectsService;
 
 
 @RestController
 public class ProjectsRestController {
 	@Autowired
 	IPorjectsService projServ;
-	//http://localhost:8081/getAll
-    @GetMapping(value = "getAll")
-    @ResponseBody
-	public String getAllEmployeNamesJPQL() {
-		
-		return "test";
-	}
-    
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/searchAllProjects")
-  //@RequestMapping(value = "/searchAPIProject", method = RequestMethod.POST, consumes="application/json")
-  	@ResponseBody
-  	public List<Projet> searchAPIProject() {
-  		return projServ.getDocumentations();
-  			
-  	}
     
     @CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/searchAPIProject")
